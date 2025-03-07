@@ -7,20 +7,38 @@ function App() {
   const [beerCount, setBeerCount] = useState(0);
 
   useEffect(() => {
-    const fetchBeerCount = async () => {
-      const docRef = doc(db, "global", "beerCount");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setBeerCount(docSnap.data().count);
-      }
-    };
-    fetchBeerCount();
+      const fetchBeerCount = async () => {
+          try {
+              const docRef = doc(db, "global", "beerCount");
+              const docSnap = await getDoc(docRef);
+
+              if (docSnap.exists()) {
+                  setBeerCount(docSnap.data().count); // Load count from Firestore
+              } else {
+                  console.log("No document found. Initializing beerCount to 0.");
+                  await setDoc(docRef, { count: 0 }, { merge: true }); // Initialize if missing
+                  setBeerCount(0);
+              }
+          } catch (error) {
+              console.error("Error fetching beer count:", error);
+          }
+      };
+
+      fetchBeerCount();
   }, []);
 
   const incrementBeerCount = async () => {
-    const newCount = beerCount + 1;
-    setBeerCount(newCount);
-    await setDoc(doc(db, "global", "beerCount"), { count: newCount });
+      try {
+          const newCount = beerCount + 1;
+          setBeerCount(newCount); // Update UI immediately
+
+          // Save new count to Firestore with merge to prevent overwriting
+          const docRef = doc(db, "global", "beerCount");
+          await setDoc(docRef, { count: newCount }, { merge: true });
+
+      } catch (error) {
+          console.error("Error updating beer count:", error);
+      }
   };
 
   return (
