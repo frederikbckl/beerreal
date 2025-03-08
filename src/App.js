@@ -11,33 +11,39 @@ function App() {
   const [username, setUsername] = useState("");
 
   // Listen for Auth State Changes
-  useEffect(() => {
-    const fetchUsername = async () => {
-      if (!user) return;
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        setUsername(userSnap.data().name);
-      }
-    };
-
-    fetchUsername();
-  }, [user]);
-
   // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //     if (user) {
-  //       // Fetch user's name from Firestore
-  //       const userRef = doc(db, "users", user.uid);
-  //       const userSnap = await getDoc(userRef);
-  //       if (userSnap.exists()) {
-  //         setUsername(userSnap.data().name);
-  //       }
+  //   const fetchUsername = async () => {
+  //     if (!user) return;
+  //     const userRef = doc(db, "users", user.uid);
+  //     const userSnap = await getDoc(userRef);
+  //     if (userSnap.exists()) {
+  //       setUsername(userSnap.data().name);
   //     }
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
+  //   };
+
+  //   fetchUsername();
+  // }, [user]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUser(user);
+        localStorage.setItem("user", JSON.stringify(user)); // ✅ Store user in localStorage
+
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setUsername(userSnap.data().name);
+        }
+      } else {
+        setUser(null);
+        localStorage.removeItem("user"); // ❌ Remove user if logged out
+      }
+    });
+
+  return () => unsubscribe();
+}, []);
+
 
   // Load Global Beer Count from Firestore
   useEffect(() => {
