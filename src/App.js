@@ -98,7 +98,7 @@ function App() {
             Logout
           </button>
           <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
-            Biedersteiner Production
+            Biederstein Productions © 2025
           </p>
         </>
       ) : (
