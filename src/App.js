@@ -84,15 +84,15 @@ function App() {
     <div style={{ textAlign: "center", marginTop: "80px" }}>
       {user ? (
         <>
-          <h1>Nächster Halt: Eine Millionen Bier</h1>
+          <h1>Road to One Million Beer</h1>
           <h1>{beerCount}</h1>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}>
-            🍺  Prost  🍺
+            🍺 Prost 🍺
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
           <p style={{ fontSize: "18px", fontWeight: "normal" }}>
-            Danke, dass Du uns auf diesem Weg begleitest! 🍻
+            Danke, dass Du uns auf diesem Weg begleitest. 🍻
           </p>
           <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
@@ -107,22 +107,5 @@ function App() {
     </div>
   );
 }
-
-
-
-//   return (
-//     <div style={{ textAlign: "center", margginTop: "50px" }}>
-//       <h1>🍺 Beer Counter</h1>
-//       <h2>{beerCount}</h2>
-//       <button 
-//           onClick={incrementBeerCount} 
-//           style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}
-//       >
-//         Add a Beer
-//       </button>
-//     </div>
-//   );
-
-// }
 
 export default App;
