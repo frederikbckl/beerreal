@@ -10,20 +10,6 @@ function App() {
   const [beerCount, setBeerCount] = useState(0);
   const [username, setUsername] = useState("");
 
-  // Listen for Auth State Changes
-  // useEffect(() => {
-  //   const fetchUsername = async () => {
-  //     if (!user) return;
-  //     const userRef = doc(db, "users", user.uid);
-  //     const userSnap = await getDoc(userRef);
-  //     if (userSnap.exists()) {
-  //       setUsername(userSnap.data().name);
-  //     }
-  //   };
-
-  //   fetchUsername();
-  // }, [user]);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -98,9 +84,10 @@ function App() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       {user ? (
         <>
-          <h1>🍺 Beer Counter</h1>
-          <h2>{beerCount}</h2>
-          <h3>Welcome, {username}</h3>
+          <h1>Road to 1 Million Beer</h1>
+          <h2>🍺 Prost 🍺</h2>
+          <h3>{beerCount}</h3>
+          <h4>Welcome, {username}</h4>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
             Add a Beer
           </button>
@@ -108,6 +95,7 @@ function App() {
           <button onClick={handleLogout} style={{ marginTop: "10px", background: "red", color: "white" }}>
             Logout
           </button>
+          <h5>Biedersteiner Production</h5>         
         </>
       ) : (
         <Auth setUser={setUser} />
