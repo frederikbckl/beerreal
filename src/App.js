@@ -84,7 +84,7 @@ function App() {
     <div style={{ textAlign: "center", marginTop: "80px" }}>
       {user ? (
         <>
-          <h1>Road to 1 Million Beer</h1>
+          <h1>Nächster Halt: EINE MILLIONEN BIER</h1>
           <h2>🍺 Prost 🍺</h2>
           <h2>{beerCount}</h2>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
@@ -92,10 +92,10 @@ function App() {
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
-          <p style={{ fontSize: "12px", fontWeight: "normal" }}>
-            Danke, dass du uns auf dem Weg zur Millionen begleitest! 🍻
+          <p style={{ fontSize: "16px", fontWeight: "normal" }}>
+            Danke, dass du uns auf diesem Weg begleitest! 🍻
           </p>
-          <button onClick={handleLogout} style={{ marginTop: "20px", background: "black", color: "white" }}>
+          <button onClick={handleLogout} style={{ fontSize: "16px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
           <p style={{ fontSize: "12px", fontWeight: "normal" }}>
