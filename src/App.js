@@ -84,21 +84,21 @@ function App() {
     <div style={{ textAlign: "center", marginTop: "80px" }}>
       {user ? (
         <>
-          <h1>Nächster Halt: EINE MILLIONEN BIER</h1>
+          <h1>Nächster Halt: Eine Millionen Bier</h1>
           <h2>🍺 Prost 🍺</h2>
-          <h2>{beerCount}</h2>
+          <h1>{beerCount}</h1>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
             Add a Beer
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
-          <p style={{ fontSize: "16px", fontWeight: "normal" }}>
+          <p style={{ fontSize: "18px", fontWeight: "normal" }}>
             Danke, dass du uns auf diesem Weg begleitest! 🍻
           </p>
-          <button onClick={handleLogout} style={{ fontSize: "16px", marginTop: "20px", background: "black", color: "white" }}>
+          <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
-          <p style={{ fontSize: "12px", fontWeight: "normal" }}>
+          <p style={{ fontSize: "14px", fontWeight: "normal" }}>
             Biedersteiner Production
           </p>
         </>
