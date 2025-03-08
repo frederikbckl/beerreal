@@ -87,7 +87,7 @@ function App() {
           <h1>Nächster Halt: Eine Millionen Bier</h1>
           <h1>{beerCount}</h1>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}>
-            🍺 Prost 🍺
+            🍺  Prost  🍺
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
@@ -97,7 +97,7 @@ function App() {
           <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
-          <p style={{ fontSize: "14px", fontWeight: "normal" }}>
+          <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginBottom: "30px" }}>
             Biedersteiner Production
           </p>
         </>
