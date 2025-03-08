@@ -97,7 +97,7 @@ function App() {
           <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
-          <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginBottom: "30px" }}>
+          <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
             Biedersteiner Production
           </p>
         </>
