@@ -85,10 +85,9 @@ function App() {
       {user ? (
         <>
           <h1>Nächster Halt: Eine Millionen Bier</h1>
-          <h2>🍺 Prost 🍺</h2>
           <h1>{beerCount}</h1>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
-            Add a Beer
+            🍺 Prost 🍺
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
