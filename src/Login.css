@@ -12,6 +12,32 @@ body {
     height: 100vh;
 }
 
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e1e;
+    /* Dark theme */
+}
+
+.auth-box {
+    background: #333;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    /* Ensures it doesn't take full width on mobile */
+    width: 90%;
+}
+
+h2, p {
+    color: white;
+}
+
+
+
 /* Center login box */
 .login-container {
     background-color: #333;
@@ -30,13 +56,39 @@ body {
 }
 
 input {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 5px;
+  border: none;
+  background: #222;
+  color: white;
+}
+
+.login-btn {
     width: 100%;
-    padding: 18px 12px;
-    background: #222;
+    padding: 10px;
+    background: #ff9800;
     border: none;
-    border-radius: 6px;
     color: white;
-    font-size: 16px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.auth-toggle {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+.signup-btn {
+    background: none;
+    border: none;
+    color: #ff9800;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 input:focus {
