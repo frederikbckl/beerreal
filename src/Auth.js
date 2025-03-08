@@ -7,7 +7,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignup, setIsSignup] = useState(false);
@@ -16,69 +16,119 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/beer-counter"); // ✅ Redirect to home after login
-    } catch (err) {
-      setError("Falsche Anmeldedaten oder Konto existiert nicht.");
+      // Simulate authentication (Replace with Firebase Auth logic)
+      if (email === "test@example.com" && password === "password") {
+        setUser({ email });
+        navigate("/beer-counter");
+      } else {
+        alert("Falsche Anmeldedaten oder Konto existiert nicht.");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
     }
   };
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   try {
+  //     await signInWithEmailAndPassword(auth, email, password);
+  //     navigate("/beer-counter"); // ✅ Redirect to home after login
+  //   } catch (err) {
+  //     setError("Falsche Anmeldedaten oder Konto existiert nicht.");
+  //   }
+  // };
 
   const toggleAuthMode = () => {
     setIsSignup(!isSignup);
   };
 
   return (
-    <div className="container">
-      <div className="card">
-        <h2>{isSignup ? "Neu dabei?" : "Willkommen zurück bei BeerReal"}</h2>
-        <p>
-          {isSignup
-            ? "Bitte erstelle einen Account, um fortzufahren."
-            : "Bitte logge Dich ein, um fortzufahren."}
-        </p>
+    <div className="auth-container">
+      <div className="auth-box">
+        <h1 className="auth-title">Willkommen zurück bei BeerReal</h1>
+        <p className="auth-subtitle">Bitte logge Dich ein, um fortzufahren.</p>
         <form onSubmit={handleLogin}>
-          {isSignup && (
+          <div className="input-group">
+            <label>Email</label>
             <input
-              type="text"
-              placeholder="Name"
-              className="input-box"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
-          )}
-          <input
-            type="email"
-            placeholder="Email"
-            className="input-box"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Passwort"
-            className="input-box"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="button" type="submit">
-            {isSignup ? "Sign Up" : "Login"}
+          </div>
+          <div className="input-group">
+            <label>Passwort</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button className="auth-button" type="submit">
+            Login
           </button>
-          {error && <p className="error-message">{error}</p>}
         </form>
-        <div className="toggle-container">
-          <p>{isSignup ? "Bereits registriert?" : "Noch nicht dabei?"}</p>
-          <button
-            className="toggle-button"
-            onClick={() => setIsSignup(!isSignup)}
-          >
-            {isSignup ? "Hier einloggen" : "Hier Account erstellen"}
-          </button>
-        </div>
+        <p className="switch-text">Noch nicht dabei?</p>
+        <button className="switch-button" onClick={() => navigate("/signup")}>Hier Account erstellen</button>
       </div>
     </div>
   );
 };
 
+
+//   return (
+//     <div className="auth-container">
+//       <div className="auth-box">
+//         <h2>{isSignup ? "Neu dabei?" : "Willkommen zurück bei BeerReal"}</h2>
+//         <p>
+//           {isSignup
+//             ? "Bitte erstelle einen Account, um fortzufahren."
+//             : "Bitte logge Dich ein, um fortzufahren."}
+//         </p>
+//         <form onSubmit={handleLogin}>
+//           {isSignup && (
+//             <input
+//               type="text"
+//               placeholder="Name"
+//               className="input-box"
+//             />
+//           )}
+//           <input
+//             type="email"
+//             placeholder="Email"
+//             className="input-box"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//           />
+//           <input
+//             type="password"
+//             placeholder="Passwort"
+//             className="input-box"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//           />
+//           <button className="button" type="submit">
+//             {isSignup ? "Sign Up" : "Login"}
+//           </button>
+//           {error && <p className="error-message">{error}</p>}
+//         </form>
+//         <div className="toggle-container">
+//           <p>{isSignup ? "Bereits registriert?" : "Noch nicht dabei?"}</p>
+//           <button
+//             className="toggle-button"
+//             onClick={() => setIsSignup(!isSignup)}
+//           >
+//             {isSignup ? "Hier einloggen" : "Hier Account erstellen"}
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 
 //   return (
