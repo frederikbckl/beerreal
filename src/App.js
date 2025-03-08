@@ -86,7 +86,7 @@ function App() {
         <>
           <h1>Nächster Halt: Eine Millionen Bier</h1>
           <h1>{beerCount}</h1>
-          <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", background: "black", color: "white" }}>
+          <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}>
             🍺 Prost 🍺
           </button>
           <br />
