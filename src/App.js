@@ -4,6 +4,8 @@ import { db, auth } from "./firebase";
 import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import Auth from "./Auth";
+import Signup from "./Signup";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -87,34 +89,97 @@ function App() {
     setUser(null);
   };
 
+return (
+  <Router>
+    <Routes>
+      {/* Route for Login */}
+      <Route
+        path="/"
+        element={
+          <div style={{ containerStyle }}>
+            {user ? (
+              <>
+                <h1>Road to One Million Beer</h1>
+                <h1>{beerCount}</h1>
+                <button
+                  onClick={addBeer}
+                  style={{
+                    fontSize: "20px",
+                    padding: "10px",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    color: "black",
+                  }}
+                >
+                  🍺 Prost 🍺
+                </button>
+                <br />
+                <h3>Wilkommen {username}!</h3>
+                <p style={{ fontSize: "18px", fontWeight: "normal" }}>
+                  Danke, dass Du uns auf diesem Weg begleitest. 🍻
+                </p>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    fontSize: "18px",
+                    marginTop: "20px",
+                    background: "black",
+                    color: "white",
+                  }}
+                >
+                  Logout
+                </button>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "normal",
+                    color: "grey",
+                    marginTop: "30px",
+                  }}
+                >
+                  Biederstein Productions © 2025
+                </p>
+              </>
+            ) : (
+              <Auth setUser={setUser} />
+            )}
+          </div>
+        }
+      />
 
-  return (
-    // <div style={{ textAlign: "center", marginTop: "80px" }}>
-    <div style={{containerStyle}}>
-      {user ? (
-        <>
-          <h1>Road to One Million Beer</h1>
-          <h1>{beerCount}</h1>
-          <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}>
-            🍺 Prost 🍺
-          </button>
-          <br />
-          <h3>Wilkommen {username}!</h3>
-          <p style={{ fontSize: "18px", fontWeight: "normal" }}>
-            Danke, dass Du uns auf diesem Weg begleitest. 🍻
-          </p>
-          <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
-            Logout
-          </button>
-          <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
-            Biederstein Productions © 2025
-          </p>
-        </>
-      ) : (
-        <Auth setUser={setUser} />
-      )}
-    </div>
-  );
+      {/* Route for Signup Page */}
+      <Route path="/signup" element={<Signup />} />
+    </Routes>
+  </Router>
+);
+
+  // return (
+  //   // <div style={{ textAlign: "center", marginTop: "80px" }}>
+  //   <div style={{containerStyle}}>
+  //     {user ? (
+  //       <>
+  //         <h1>Road to One Million Beer</h1>
+  //         <h1>{beerCount}</h1>
+  //         <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}>
+  //           🍺 Prost 🍺
+  //         </button>
+  //         <br />
+  //         <h3>Wilkommen {username}!</h3>
+  //         <p style={{ fontSize: "18px", fontWeight: "normal" }}>
+  //           Danke, dass Du uns auf diesem Weg begleitest. 🍻
+  //         </p>
+  //         <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
+  //           Logout
+  //         </button>
+  //         <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
+  //           Biederstein Productions © 2025
+  //         </p>
+  //       </>
+  //     ) : (
+  //       <Auth setUser={setUser} />
+  //     )}
+  //   </div>
+  // );
 }
 
 export default App;
