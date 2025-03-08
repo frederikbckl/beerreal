@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+
 
 function Auth({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
 
@@ -19,7 +22,12 @@ function Auth({ setUser }) {
         setUser(userCredential.user);
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        setUser(userCredential.user);
+        const user = userCredential.user;
+
+        // ✅ Store username in Firestore
+        await setDoc(doc(db, "users", user.uid), { name });
+
+        setUser(user);
       }
     } catch (err) {
       setError(err.message);
@@ -30,6 +38,15 @@ function Auth({ setUser }) {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h2>{isLogin ? "Login" : "Sign Up"}</h2>
       <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        )}
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit">{isLogin ? "Login" : "Sign Up"}</button>

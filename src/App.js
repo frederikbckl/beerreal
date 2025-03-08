@@ -8,14 +8,36 @@ import Auth from "./Auth";
 function App() {
   const [user, setUser] = useState(null);
   const [beerCount, setBeerCount] = useState(0);
+  const [username, setUsername] = useState("");
 
   // Listen for Auth State Changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
+    const fetchUsername = async () => {
+      if (!user) return;
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        setUsername(userSnap.data().name);
+      }
+    };
+
+    fetchUsername();
+  }, [user]);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //     if (user) {
+  //       // Fetch user's name from Firestore
+  //       const userRef = doc(db, "users", user.uid);
+  //       const userSnap = await getDoc(userRef);
+  //       if (userSnap.exists()) {
+  //         setUsername(userSnap.data().name);
+  //       }
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
   // Load Global Beer Count from Firestore
   useEffect(() => {
@@ -51,26 +73,13 @@ function App() {
 
     await addDoc(collection(db, "beers"), {
       userId: user.uid,
+      username: username,
       timestamp: serverTimestamp(),
       beerType: "Helles",
       photoURL: null,
       location: null,
     });
   };
-
-  // const incrementBeerCount = async () => {
-  //     try {
-  //         const newCount = beerCount + 1;
-  //         setBeerCount(newCount); // Update UI immediately
-
-  //         // Save new count to Firestore with merge to prevent overwriting
-  //         const docRef = doc(db, "global", "beerCount");
-  //         await setDoc(docRef, { count: newCount }, { merge: true });
-
-  //     } catch (error) {
-  //         console.error("Error updating beer count:", error);
-  //     }
-  // };
 
   // Logout Function
   const handleLogout = async () => {
@@ -85,6 +94,7 @@ function App() {
         <>
           <h1>🍺 Beer Counter</h1>
           <h2>{beerCount}</h2>
+          <h3>Welcome, {username}</h3>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
             Add a Beer
           </button>
