@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { auth, db } from "./firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
+import "./Login.css";
+import { useNavigate } from "react-router-dom";
+
 
 // Styled Components for Modern UI
 const LoginContainer = styled.div`
@@ -91,35 +94,77 @@ const ToggleText = styled.p`
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/beer-counter"); // ✅ Redirect to home after login
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+    }
+  };
 
   return (
-    <LoginContainer>
-      <LoginBox>
-        <Title>Login</Title>
-        <InputContainer>
-          <Input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder=" "
-          />
-          <FloatingLabel>Email</FloatingLabel>
-        </InputContainer>
-        <InputContainer>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder=" "
-          />
-          <FloatingLabel>Password</FloatingLabel>
-        </InputContainer>
-        <Button>Login</Button>
-        <ToggleText>Don't have an account? Sign Up</ToggleText>
-      </LoginBox>
-    </LoginContainer>
+    <div className="LoginContainer">
+      <div className="LoginBox">
+        <h2>Willkommen zurück bei BeerReal</h2>
+        <form onSubmit={handleLogin}>
+          <div className="input-container">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label className={email ? "floating" : ""}>Email</label>
+          </div>
+          <div className="input-container">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <label className={password ? "floating" : ""}>Password</label>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit">Login</button>
+        </form>
+        <p className="switch-text">Don't have an account? <span>Sign Up</span></p>
+      </div>
+    </div>
   );
 };
+
+
+//         <InputContainer>
+//           <Input
+//             type="email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             placeholder=" "
+//           />
+//           <FloatingLabel>Email</FloatingLabel>
+//         </InputContainer>
+//         <InputContainer>
+//           <Input
+//             type="password"
+//             value={password}
+//             onChange={(e) => setPassword(e.target.value)}
+//             placeholder=" "
+//           />
+//           <FloatingLabel>Password</FloatingLabel>
+//         </InputContainer>
+//         <Button>Login</Button>
+//         <ToggleText>Don't have an account? Sign Up</ToggleText>
+//       </LoginBox>
+//     </LoginContainer>
+//   );
+// };
 
 export default Login;
 
