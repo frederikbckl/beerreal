@@ -85,14 +85,14 @@ function App() {
       {user ? (
         <>
           <h1>Road to 1 Million Beer</h1>
-          <h1>🍺 Prost 🍺</h1>
-          <h2>{beerCount}</h2>
-          <h3>Welcome, {username}</h3>
+          <h2>🍺 Prost 🍺</h2>
+          <h2>{beerCount}</h2>>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
             Add a Beer
           </button>
           <br />
-          <button onClick={handleLogout} style={{ fontSize: "14px", marginTop: "20px", background: "red", color: "white" }}>
+          <h3>Welcome, {username}</h3>
+          <button onClick={handleLogout} style={{ fontSize: "14px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
           <h5>Biedersteiner Production</h5>         
