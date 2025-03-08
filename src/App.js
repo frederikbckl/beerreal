@@ -86,16 +86,21 @@ function App() {
         <>
           <h1>Road to 1 Million Beer</h1>
           <h2>🍺 Prost 🍺</h2>
-          <h2>{beerCount}</h2>>
+          <h2>{beerCount}</h2>
           <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
             Add a Beer
           </button>
           <br />
-          <h3>Welcome, {username}</h3>
-          <button onClick={handleLogout} style={{ fontSize: "14px", marginTop: "20px", background: "black", color: "white" }}>
+          <h3>Wilkommen {username}!</h3>
+          <p style={{ fontSize: "12px", fontWeight: "normal" }}>
+            Danke, dass du uns auf dem Weg zur Millionen begleitest! 🍻
+          </p>
+          <button onClick={handleLogout} style={{ marginTop: "20px", background: "black", color: "white" }}>
             Logout
           </button>
-          <h5>Biedersteiner Production</h5>         
+          <p style={{ fontSize: "12px", fontWeight: "normal" }}>
+            Biedersteiner Production
+          </p>
         </>
       ) : (
         <Auth setUser={setUser} />
