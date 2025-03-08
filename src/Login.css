@@ -1,26 +1,37 @@
 /* src/Login.css */
 
-/* Centering the login box */
+/* Apply global styles */
 body {
+    background-color: #1e1e1e;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #1e1e1e;
-    font-family: "Poppins", sans-serif;
-    margin: 0;
 }
 
-/* Fix input box alignment & floating labels */
+/* Center login box */
+.login-container {
+    background-color: #333;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+}
+
+/* Fix floating labels inside input */
 .input-group {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
     width: 100%;
 }
 
 input {
     width: 100%;
-    padding: 16px 12px;
+    padding: 18px 12px;
     background: #222;
     border: none;
     border-radius: 6px;
@@ -56,16 +67,6 @@ input:not(:placeholder-shown)+label {
     border-radius: 4px;
 }
 
-/* Fix Login Box Width for Desktop */
-.login-container {
-    background-color: #333;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 400px;
-    text-align: center;
-}
-
 /* Title */
 .login-container h2 {
     color: white;
@@ -96,4 +97,10 @@ button:hover {
     margin-top: 12px;
     color: #ffcc00;
     font-size: 14px;
+}
+
+/* Fix Sign Up Text */
+.sign-up-text {
+    color: white;
+    margin-top: 10px;
 }

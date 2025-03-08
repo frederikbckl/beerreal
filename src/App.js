@@ -53,6 +53,14 @@ function App() {
       fetchBeerCount();
   }, []);
 
+  const containerStyle = {
+    backgroundColor: "#1e1e1e",
+    color: "white",
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
   // Add a new beer
   const addBeer = async () => {
@@ -81,7 +89,8 @@ function App() {
 
 
   return (
-    <div style={{ textAlign: "center", marginTop: "80px" }}>
+    // <div style={{ textAlign: "center", marginTop: "80px" }}>
+    <div style={{containerStyle}}>
       {user ? (
         <>
           <h1>Road to One Million Beer</h1>

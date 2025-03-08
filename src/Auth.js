@@ -7,91 +7,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 
-// Styled Components for Modern UI
-const LoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: url("/beer-bg.jpg") no-repeat center center;
-  background-size: cover;
-  padding: 20px;
-`;
-
-const LoginBox = styled.div`
-  background: rgba(0, 0, 0, 0.8);
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
-`;
-
-const Title = styled.h2`
-  color: white;
-  margin-bottom: 20px;
-`;
-
-const InputContainer = styled.div`
-  position: relative;
-  margin-bottom: 20px;
-`;
-
-const FloatingLabel = styled.label`
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  font-size: 14px;
-  color: #bbb;
-  transition: all 0.3s;
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 2px 5px;
-`;
-
-const Input = styled.input`
-  width: calc(100% - 24px);
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: #222;
-  color: white;
-  font-size: 16px;
-  outline: none;
-  &:focus + ${FloatingLabel}, &:not(:placeholder-shown) + ${FloatingLabel} {
-    top: -8px;
-    font-size: 12px;
-    color: orange;
-  }
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: orange;
-  color: black;
-  font-size: 18px;
-  cursor: pointer;
-  font-weight: bold;
-  &:hover {
-    background: darkorange;
-  }
-`;
-
-const ToggleText = styled.p`
-  margin-top: 15px;
-  font-size: 14px;
-  color: lightgray;
-  cursor: pointer;
-  &:hover {
-    color: orange;
-  }
-`;
-
-const Login = () => {
+const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -109,9 +25,41 @@ const Login = () => {
   };
 
   return (
-    <div className="LoginContainer">
-      <div className="LoginBox">
+    <div className="login-container">
+      {/* <div className="LoginBox"> */}
         <h2>Willkommen zurück bei BeerReal</h2>
+        <p>Bitte logge Dich ein, um fortzufahren.</p>
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder=" "
+            />
+            <label>Email</label>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder=" "
+            />
+            <label>Password</label>
+          </div>
+          <button>Login</button>
+        </form>
+        {/* <p className="switch-text">Don't have an account? <span>Sign Up</span></p> */}
+        <p className="sign-up-text">Noch nicht dabei? <span>Hier Account erstellen und gemeinsam Biere zählen</span></p>
+      </div>
+    );
+  };
+
+{/* 
         <form onSubmit={handleLogin}>
           <div className="input-container">
             <input
@@ -138,7 +86,7 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}; */}
 
 
 //         <InputContainer>
@@ -166,7 +114,7 @@ const Login = () => {
 //   );
 // };
 
-export default Login;
+export default Auth;
 
 
 // export default function Auth({ setUser }) {
