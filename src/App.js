@@ -86,13 +86,13 @@ function App() {
         <>
           <h1>Nächster Halt: Eine Millionen Bier</h1>
           <h1>{beerCount}</h1>
-          <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer" }}>
+          <button onClick={addBeer} style={{ fontSize: "20px", padding: "10px", cursor: "pointer", background: "black", color: "white" }}>
             🍺 Prost 🍺
           </button>
           <br />
           <h3>Wilkommen {username}!</h3>
           <p style={{ fontSize: "18px", fontWeight: "normal" }}>
-            Danke, dass du uns auf diesem Weg begleitest! 🍻
+            Danke, dass Du uns auf diesem Weg begleitest! 🍻
           </p>
           <button onClick={handleLogout} style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}>
             Logout
