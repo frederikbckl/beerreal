@@ -1,42 +1,26 @@
 /* src/Login.css */
 
-/* Dark Theme Styles */
+/* Centering the login box */
 body {
-    background-color: #1e1e1e;
-    font-family: "Poppins", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #1e1e1e;
+    font-family: "Poppins", sans-serif;
     margin: 0;
 }
 
-/* Login Container */
-.login-container {
-    background-color: #333;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 350px;
-    text-align: center;
-}
-
-/* Title */
-.login-container h2 {
-    color: white;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-/* Input Fields */
+/* Fix input box alignment & floating labels */
 .input-group {
     position: relative;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 input {
     width: 100%;
-    padding: 12px;
+    padding: 16px 12px;
     background: #222;
     border: none;
     border-radius: 6px;
@@ -46,10 +30,10 @@ input {
 
 input:focus {
     outline: none;
-    border: 1px solid #ffcc00;
+    border: 2px solid #ffcc00;
 }
 
-/* Floating Labels */
+/* Floating Labels - Fix Position */
 label {
     position: absolute;
     left: 12px;
@@ -57,15 +41,36 @@ label {
     transform: translateY(-50%);
     color: #bbb;
     font-size: 14px;
-    transition: 0.3s;
+    transition: all 0.3s;
     pointer-events: none;
 }
 
 input:focus+label,
 input:not(:placeholder-shown)+label {
-    top: 5px;
+    top: 8px;
     font-size: 12px;
     color: #ffcc00;
+    background: #222;
+    /* Match input background */
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Fix Login Box Width for Desktop */
+.login-container {
+    background-color: #333;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    text-align: center;
+}
+
+/* Title */
+.login-container h2 {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
 }
 
 /* Login Button */
