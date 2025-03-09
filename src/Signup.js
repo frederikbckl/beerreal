@@ -30,21 +30,51 @@ const Signup = () => {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h2>Neu dabei?</h2>
-        <p>Bitte erstelle einen Account, um fortzufahren.</p>
+        <h1 className="auth-title">Willkommen bei BeerReal!</h1>
+        <p className="auth-subtitle">Neu dabei? Bitte erstelle einen Account, um fortzufahren.</p>
+        <form onSubmit={handleSignup}>
+          <div className="input-group">
+            <label>Name</label>
+            <input
+              type="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>Passwort</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button className="login-btn" onClick={handleSignup}>
+            Sign Up
+          </button>
+        </form>
+        <p className="switch-text">Hier Account erstellen</p>
+        <button className="switch-button" onClick={() => navigate("/auth")}>Noch nicht dabei?</button>
 
-        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Passwort" value={password} onChange={(e) => setPassword(e.target.value)} />
-
-        <button className="login-btn" onClick={handleSignup}>Sign Up</button>
+        {/* <button className="login-btn" onClick={handleSignup}>Sign Up</button>
 
         <p className="auth-toggle">
           Bereits registriert?{" "}
           <button onClick={() => navigate("/")} className="signup-btn">
             Hier einloggen
           </button>
-        </p>
+        </p> */}
       </div>
     </div>
   );
