@@ -65,7 +65,7 @@ const Signup = () => {
           </button>
         </form>
         <p className="switch-text">Hier Account erstellen</p>
-        <button className="switch-button" onClick={() => navigate("/auth")}>Noch nicht dabei?</button>
+        <button className="switch-button" onClick={() => navigate("/login")}>Noch nicht dabei?</button>
 
         {/* <button className="login-btn" onClick={handleSignup}>Sign Up</button>
 
