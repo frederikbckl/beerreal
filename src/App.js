@@ -47,60 +47,6 @@ function App() {
   }, []); // Empty dependency array ensures this runs only once
 
 
-  // useEffect(() => {
-  //   const fetchBeerCount = async () => {
-  //     try {
-  //       const docRef = doc(db, "global", "beerCount");
-  //       const docSnap = await getDoc(docRef);
-
-  //       if (docSnap.exists()) {
-  //         setBeerCount(docSnap.data().count); // Load count from Firestore
-  //       } else {
-  //         console.log("No document found. Initializing beerCount to 0.");
-  //         await setDoc(docRef, { count: 0 }, { merge: true }); // Initialize if missing
-  //         setBeerCount(0);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching beer count:", error);
-  //     }
-  //   };
-
-  //  // Fetch beer count initially and set up Firestore listener
-  //   fetchBeerCount();
-
-  //   // Listen for real-time updates
-  //   const unsubscribe = onSnapshot(doc(db, "global", "beerCount"), (doc) => {
-  //     if (doc.exists()) {
-  //       setBeerCount(doc.data().count);
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-
-  // Load Global Beer Count from Firestore
-  // useEffect(() => {
-  //     const fetchBeerCount = async () => {
-  //         try {
-  //             const docRef = doc(db, "global", "beerCount");
-  //             const docSnap = await getDoc(docRef);
-
-  //             if (docSnap.exists()) {
-  //                 setBeerCount(docSnap.data().count); // Load count from Firestore
-  //             } else {
-  //                 console.log("No document found. Initializing beerCount to 0.");
-  //                 await setDoc(docRef, { count: 0 }, { merge: true }); // Initialize if missing
-  //                 setBeerCount(0);
-  //             }
-  //         } catch (error) {
-  //             console.error("Error fetching beer count:", error);
-  //         }
-  //     };
-
-  //     fetchBeerCount();
-  // }, []);
-
   const containerStyle = {
     backgroundColor: "#1e1e1e",
     color: "white",
@@ -149,63 +95,6 @@ function App() {
       console.error("Error adding beer:", error);
     }
   };
-
-
-  // Add a new beer
-  // const addBeer = async () => {
-  //   if (!user) return; // Ensure user is logged in
-
-  //   try {
-  //     const docRef = doc(db, "global", "beerCount");
-  //     const docSnap = await getDoc(docRef);
-
-  //     let newCount = 1; // Default if document doesn't exist
-
-  //     if (docSnap.exists()) {
-  //       newCount = docSnap.data().count + 1;
-  //     }
-
-  //     // Update Firestore first before updating local state
-  //     await setDoc(docRef, { count: newCount }, { merge: true });
-
-  //     // ✅ Fetch the updated count to ensure UI is always in sync
-  //     setBeerCount(newCount);
-
-  //     // ✅ Log Firestore update for debugging
-  //     console.log("Beer added. New count:", newCount);
-
-  //     // Log the beer entry in Firestore
-  //     await addDoc(collection(db, "beers"), {
-  //       userId: user.uid,
-  //       username: username || "Unknown",
-  //       timestamp: serverTimestamp(),
-  //       beerType: "Helles",
-  //       photoURL: null,
-  //       location: null,
-  //     });
-
-  //   } catch (error) {
-  //     console.error("Error adding beer:", error);
-  //   }
-  // };
-
-
-
-
-  //   const newCount = beerCount + 1;
-  //   setBeerCount(newCount);
-
-  //   await setDoc(doc(db, "global", "beerCount"), { count: newCount }, { merge: true });
-
-  //   await addDoc(collection(db, "beers"), {
-  //     userId: user.uid,
-  //     username: username,
-  //     timestamp: serverTimestamp(),
-  //     beerType: "Helles",
-  //     photoURL: null,
-  //     location: null,
-  //   });
-  // };
 
   // Logout Function
   const handleLogout = async () => {
