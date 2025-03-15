@@ -13,7 +13,8 @@ const firebaseConfig = {
   apiKey: "AIzaSyAFoXtDVK0sRTG4YayM3OjqYXJNaUY58EE",
   authDomain: "beerreal-8019b.firebaseapp.com",
   projectId: "beerreal-8019b",
-  storageBucket: "beerreal-8019b.firebasestorage.app",
+  storageBucket: "beerreal-8019b.appspot.com",
+  // storageBucket: "beerreal-8019b.firebasestorage.app",
   messagingSenderId: "773882256697",
   appId: "1:773882256697:web:addca7c3ed6ff895109ce8",
   measurementId: "G-ZK78BQCVRC"
@@ -21,9 +22,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 export { auth, db };
-
