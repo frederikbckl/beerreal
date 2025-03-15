@@ -55,6 +55,40 @@ h2, p {
     width: 100%;
 }
 
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #bbb;
+    transition: all 0.3s ease-in-out;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+}
+
+.input-group input:focus,
+.input-group input:not(:placeholder-shown) {
+    padding-top: 18px;
+    padding-bottom: 6px;
+}
+
+.input-group input:focus+label,
+.input-group input:not(:placeholder-shown)+label {
+    top: 5px;
+    font-size: 12px;
+    color: #f5a623;
+}
+
 input {
   display: block;
   width: calc(100% - 20px);

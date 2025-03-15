@@ -67,14 +67,6 @@ const Signup = () => {
         <p className="switch-text">Bereits am Biere zählen?</p>
         <button className="switch-button" onClick={() => navigate("/")}>Hier einloggen</button>
 
-        {/* <button className="login-btn" onClick={handleSignup}>Sign Up</button>
-
-        <p className="auth-toggle">
-          Bereits registriert?{" "}
-          <button onClick={() => navigate("/")} className="signup-btn">
-            Hier einloggen
-          </button>
-        </p> */}
       </div>
     </div>
   );

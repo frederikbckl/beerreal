@@ -62,32 +62,37 @@ const Auth = ({ setUser }) => {
         <form onSubmit={handleAuth}>
           {isSignup && (
             <div className="input-group">
-              <label>Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                placeholder=" " // Ensures floating label works
                 required
               />
+              <label>Name</label>
             </div>
           )}
+
           <div className="input-group">
-            <label>Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder=" " // Ensures floating label works
               required
             />
+            <label>Email</label>
           </div>
+
           <div className="input-group">
-            <label>Passwort</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder=" "
               required
             />
+            <label>Passwort</label>
           </div>
 
           <button className="auth-button" type="submit">
