@@ -160,7 +160,42 @@ input:not(:placeholder-shown)+label {
     margin-bottom: 1rem;
 }
 
-/* Login Button */
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #f5a623;
+    /* Orange */
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #e6951e;
+}
+
+.switch-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;
+    /* Dark Grey */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.switch-button:hover {
+    background-color: #444;
+}
+
+
 button {
     width: 100%;
     background-color: #ff9800;
