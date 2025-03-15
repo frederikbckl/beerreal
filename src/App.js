@@ -166,7 +166,7 @@ function App() {
           <h1>{beerCount}</h1>
           <button
             onClick={() => setBeerCount(beerCount + 1)}
-            style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "black" }}
+            style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "white" }}
           >
             🍺 Prost 🍺
           </button>

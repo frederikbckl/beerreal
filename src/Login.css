@@ -163,7 +163,7 @@ input:not(:placeholder-shown)+label {
 .auth-button {
     width: 100%;
     padding: 12px;
-    background-color: #f5a623;
+    background-color: #ff9800;
     /* Orange */
     color: white;
     font-size: 18px;
@@ -175,7 +175,7 @@ input:not(:placeholder-shown)+label {
 }
 
 .auth-button:hover {
-    background-color: #e6951e;
+    background-color: #e68900;
 }
 
 .switch-button {
