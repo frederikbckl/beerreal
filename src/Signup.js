@@ -19,7 +19,7 @@ const Signup = () => {
       // Save the user's name in Firestore
       await setDoc(doc(db, "users", user.uid), { name, email });
 
-      setUser(user)
+      // setUser(user)
       alert("Account erstellt! Du kannst dich jetzt einloggen.");
       navigate("/"); // Redirect to login page
     } catch (error) {
