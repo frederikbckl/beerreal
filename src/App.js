@@ -12,6 +12,7 @@ function App() {
   const [beerCount, setBeerCount] = useState(0);
   const [username, setUsername] = useState("");
 
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -32,36 +33,50 @@ function App() {
   return () => unsubscribe();
 }, []);
 
+
   useEffect(() => {
-    const fetchBeerCount = async () => {
-      try {
-        const docRef = doc(db, "global", "beerCount");
-        const docSnap = await getDoc(docRef);
+    const docRef = doc(db, "global", "beerCount");
 
-        if (docSnap.exists()) {
-          setBeerCount(docSnap.data().count); // Load count from Firestore
-        } else {
-          console.log("No document found. Initializing beerCount to 0.");
-          await setDoc(docRef, { count: 0 }, { merge: true }); // Initialize if missing
-          setBeerCount(0);
-        }
-      } catch (error) {
-        console.error("Error fetching beer count:", error);
-      }
-    };
-
-    // Fetch beer count initially and set up Firestore listener
-    fetchBeerCount();
-
-    // Listen for real-time updates
-    const unsubscribe = onSnapshot(doc(db, "global", "beerCount"), (doc) => {
-      if (doc.exists()) {
-        setBeerCount(doc.data().count);
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setBeerCount(docSnap.data().count);
       }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
+
+
+  // useEffect(() => {
+  //   const fetchBeerCount = async () => {
+  //     try {
+  //       const docRef = doc(db, "global", "beerCount");
+  //       const docSnap = await getDoc(docRef);
+
+  //       if (docSnap.exists()) {
+  //         setBeerCount(docSnap.data().count); // Load count from Firestore
+  //       } else {
+  //         console.log("No document found. Initializing beerCount to 0.");
+  //         await setDoc(docRef, { count: 0 }, { merge: true }); // Initialize if missing
+  //         setBeerCount(0);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching beer count:", error);
+  //     }
+  //   };
+
+  //  // Fetch beer count initially and set up Firestore listener
+  //   fetchBeerCount();
+
+  //   // Listen for real-time updates
+  //   const unsubscribe = onSnapshot(doc(db, "global", "beerCount"), (doc) => {
+  //     if (doc.exists()) {
+  //       setBeerCount(doc.data().count);
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
 
 
   // Load Global Beer Count from Firestore
@@ -93,45 +108,86 @@ function App() {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    padding: "5%",
   };
 
-  // Add a new beer
+  const boxStyle = {
+    backgroundColor: "#2a2a2a", // Lighter grey box
+    padding: "40px",
+    borderRadius: "12px",
+    textAlign: "center",
+    maxWidth: "500px",
+    width: "90%", // Prevent full width stretch
+  };
+
   const addBeer = async () => {
     if (!user) return; // Ensure user is logged in
 
     try {
       const docRef = doc(db, "global", "beerCount");
       const docSnap = await getDoc(docRef);
+      
+      let currentCount = docSnap.exists() ? docSnap.data().count : 0;
+      const newCount = currentCount + 1;
 
-      let newCount = 1; // Default if document doesn't exist
-
-      if (docSnap.exists()) {
-        newCount = docSnap.data().count + 1;
-      }
-
-      // Update Firestore first before updating local state
+      // Update Firestore first
       await setDoc(docRef, { count: newCount }, { merge: true });
 
-      // ✅ Fetch the updated count to ensure UI is always in sync
+      // Update local state AFTER Firestore confirms
       setBeerCount(newCount);
 
-      // ✅ Log Firestore update for debugging
-      console.log("Beer added. New count:", newCount);
-
-      // Log the beer entry in Firestore
+      // Add beer entry to Firestore
       await addDoc(collection(db, "beers"), {
         userId: user.uid,
-        username: username || "Unknown",
+        username: username,
         timestamp: serverTimestamp(),
         beerType: "Helles",
         photoURL: null,
         location: null,
       });
-
     } catch (error) {
       console.error("Error adding beer:", error);
     }
   };
+
+
+  // Add a new beer
+  // const addBeer = async () => {
+  //   if (!user) return; // Ensure user is logged in
+
+  //   try {
+  //     const docRef = doc(db, "global", "beerCount");
+  //     const docSnap = await getDoc(docRef);
+
+  //     let newCount = 1; // Default if document doesn't exist
+
+  //     if (docSnap.exists()) {
+  //       newCount = docSnap.data().count + 1;
+  //     }
+
+  //     // Update Firestore first before updating local state
+  //     await setDoc(docRef, { count: newCount }, { merge: true });
+
+  //     // ✅ Fetch the updated count to ensure UI is always in sync
+  //     setBeerCount(newCount);
+
+  //     // ✅ Log Firestore update for debugging
+  //     console.log("Beer added. New count:", newCount);
+
+  //     // Log the beer entry in Firestore
+  //     await addDoc(collection(db, "beers"), {
+  //       userId: user.uid,
+  //       username: username || "Unknown",
+  //       timestamp: serverTimestamp(),
+  //       beerType: "Helles",
+  //       photoURL: null,
+  //       location: null,
+  //     });
+
+  //   } catch (error) {
+  //     console.error("Error adding beer:", error);
+  //   }
+  // };
 
 
 
@@ -161,29 +217,50 @@ function App() {
     <Routes>
       {/* Login Page */}
       <Route path="/" element={user ? (
-        <div style={{ textAlign: "center", marginTop: "80px" }}>
-          <h1>Road to One Million Beer</h1>
-          <h1>{beerCount}</h1>
-          <button
-            onClick={() => setBeerCount(beerCount + 1)}
-            style={{ fontSize: "20px", padding: "10px", cursor: "pointer", fontWeight: "bold", color: "white" }}
-          >
-            🍺 Prost 🍺
-          </button>
-          <br />
-          <h3>Wilkommen {username}!</h3>
-          <p style={{ fontSize: "18px", fontWeight: "normal" }}>
-            Danke, dass Du uns auf diesem Weg begleitest. 🍻
-          </p>
-          <button
-            onClick={() => setUser(null)}
-            style={{ fontSize: "18px", marginTop: "20px", background: "black", color: "white" }}
-          >
-            Logout
-          </button>
-          <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
-            Biederstein Productions © 2025
-          </p>
+        <div style={containerStyle}>
+          <div style={boxStyle}>
+        {/* <div style={{ textAlign: "center", marginTop: "80px" }}> */}
+            <h1>Road to One Million Beer</h1>
+            <h1>{beerCount}</h1>
+            <button
+              onClick={addBeer}
+              style={{
+                fontSize: "20px",
+                padding: "10px",
+                cursor: "pointer",
+                fontWeight: "bold",
+                color: "black",
+                backgroundColor: "#f5a623",
+                borderRadius: "6px",
+                border: "none"
+              }}
+            >
+              🍺 Prost 🍺
+            </button>
+            <br />
+            <h3>Wilkommen {username}!</h3>
+            <p style={{ fontSize: "18px", fontWeight: "normal" }}>
+              Danke, dass Du uns auf diesem Weg begleitest. 🍻
+            </p>
+            <button
+              // onClick={() => setUser(null)}
+              onClick={handleLogout}
+              style={{
+                fontSize: "18px",
+                marginTop: "20px",
+                background: "black",
+                color: "white",
+                borderRadius: "6px",
+                padding: "10px 20px",
+                border: "none"
+              }}
+            >
+              Logout
+            </button>
+            <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
+              Biederstein Productions © 2025
+            </p>
+          </div>
         </div>
       ) : (
         <Auth setUser={setUser} />
