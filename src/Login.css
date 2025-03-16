@@ -18,6 +18,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #1e1e1e;
+    padding: "5%";
     /* Dark theme */
 }
 
@@ -36,8 +37,6 @@ h2, p {
     color: white;
 }
 
-
-
 /* Center login box */
 .login-container {
     background-color: #333;
@@ -46,6 +45,7 @@ h2, p {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     width: 400px;
     text-align: center;
+    padding: "5%";
 }
 
 /* Fix floating labels inside input */
