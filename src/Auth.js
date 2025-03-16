@@ -33,28 +33,50 @@ const Auth = ({ setUser }) => {
           return;
         }
 
+        setError(""); // Clear previous errors
 
-        // SIGNUP: Create user in Firebase
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        try {
+            console.log("Creating user..."); // Debugging log
 
-        // Save the user's name in Firestore
-        await setDoc(doc(db, "users", user.uid), { name, email });
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-        setUser(user)
-        alert("Account erstellt! Du kannst dich jetzt einloggen.");
-        navigate("/"); // Redirect to login page
-        
-        // userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("Signup Successful:", userCredential);
+            if (!userCredential || !userCredential.user) {
+                throw new Error("UserCredential is undefined. Signup might have failed.");
+            }
+
+            console.log("User created:", userCredential.user);
+
+            const user = userCredential.user;
+
+            // console.log("User created:", user);
+
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                email: email,
+                // createdAt: serverTimestamp()
+            });
+
+            // console.log("User data saved in Firestore.");
+
+            setUser(user);
+            alert("Account erstellt! Du kannst dich jetzt einloggen.");
+            navigate("/"); // Redirect to home
+            console.log("Signup Successful:", userCredential);
+
+
+        } catch (error) {
+            console.error("Signup error:", error);
+            setError("Fehler beim Erstellen des Kontos: " + error.message);
+        }
+
       } else {
         // LOGIN: Sign in with Firebase
         userCredential = await signInWithEmailAndPassword(auth, email, password);
         console.log("Login Successful:", userCredential);
+        setUser(userCredential.user);
+        navigate("/"); // Redirect to home
       }
 
-      setUser(userCredential.user);
-      navigate("/"); // Redirect to home
     } catch (error) {
       console.error("Authentication Error:", error.message);
       setError(error.message);
