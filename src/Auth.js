@@ -25,6 +25,15 @@ const Auth = ({ setUser }) => {
     try {
       let userCredential;
       if (isSignup) {
+        // Regular Expression: Only allows letters, numbers, underscores, and dashes (3-20 chars)
+        const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+        
+        if (!usernameRegex.test(name)) {
+          setError("Der Benutzername darf nur Buchstaben, Zahlen, Unterstriche oder Bindestriche enthalten und muss 3-20 Zeichen lang sein.");
+          return;
+        }
+
+
         // SIGNUP: Create user in Firebase
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;

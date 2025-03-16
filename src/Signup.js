@@ -10,8 +10,20 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
 
   const handleSignup = async () => {
+    // e.preventDefault();
+
+    // Regular Expression: Only allows letters, numbers, underscores, and dashes (3-20 chars)
+    const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+    
+    if (!usernameRegex.test(name)) {
+      setError("Der Benutzername darf nur Buchstaben, Zahlen, Unterstriche oder Bindestriche enthalten und muss 3-20 Zeichen lang sein.");
+      return;
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -65,6 +77,9 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
+
+        {error && <p className="error-text">{error}</p>} {/* ✅ Show error messages */}
+
         <p className="switch-text">Bereits am Biere zählen?</p>
         <button className="switch-button" onClick={() => navigate("/")}>Hier einloggen</button>
 
