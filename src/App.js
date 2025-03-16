@@ -104,13 +104,12 @@ function App() {
   };
 
   return (
-    <div style={{ paddingBottom: "60px" }}> {/* Prevent content from being blocked by tab bar */}
+    <div style={{ paddingBottom: user ? "60px" : "0px" }}> {/* Prevent content from being blocked by tab bar when logged in */}
       <Routes>
         {/* Login Page */}
         <Route path="/" element={user ? (
           <div style={containerStyle}>
             <div style={boxStyle}>
-          {/* <div style={{ textAlign: "center", marginTop: "80px" }}> */}
               <h1>Road to One Million Beer</h1>
               <h1>{beerCount}</h1>
               <button
@@ -134,7 +133,6 @@ function App() {
                 Danke, dass Du uns auf diesem Weg begleitest. 🍻
               </p>
               <button
-                // onClick={() => setUser(null)}
                 onClick={handleLogout}
                 style={{
                   fontSize: "18px",
@@ -160,7 +158,7 @@ function App() {
         {/* Signup Page */}
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      <TabBar />
+      { user && <TabBar />}
     </div>
   );
 }
