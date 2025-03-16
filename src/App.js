@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Auth from "./Auth";
 import Signup from "./Signup";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import TabBar from "./TabBar";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,7 +18,7 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        localStorage.setItem("user", JSON.stringify(user)); // ✅ Store user in localStorage
+        localStorage.setItem("user", JSON.stringify(user)); // Store user in localStorage
 
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
@@ -26,7 +27,7 @@ function App() {
         }
       } else {
         setUser(null);
-        localStorage.removeItem("user"); // ❌ Remove user if logged out
+        localStorage.removeItem("user"); // Remove user if logged out
       }
     });
 
@@ -103,61 +104,64 @@ function App() {
   };
 
   return (
-    <Routes>
-      {/* Login Page */}
-      <Route path="/" element={user ? (
-        <div style={containerStyle}>
-          <div style={boxStyle}>
-        {/* <div style={{ textAlign: "center", marginTop: "80px" }}> */}
-            <h1>Road to One Million Beer</h1>
-            <h1>{beerCount}</h1>
-            <button
-              onClick={addBeer}
-              style={{
-                fontSize: "20px",
-                padding: "10px",
-                cursor: "pointer",
-                fontWeight: "bold",
-                color: "black",
-                backgroundColor: "#f5a623",
-                borderRadius: "6px",
-                border: "none"
-              }}
-            >
-              🍺 Prost 🍺
-            </button>
-            <br />
-            <h3>Wilkommen {username}!</h3>
-            <p style={{ fontSize: "18px", fontWeight: "normal" }}>
-              Danke, dass Du uns auf diesem Weg begleitest. 🍻
-            </p>
-            <button
-              // onClick={() => setUser(null)}
-              onClick={handleLogout}
-              style={{
-                fontSize: "18px",
-                marginTop: "20px",
-                background: "black",
-                color: "white",
-                borderRadius: "6px",
-                padding: "10px 20px",
-                border: "none"
-              }}
-            >
-              Logout
-            </button>
-            <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
-              Biederstein Productions © 2025
-            </p>
+    <div style={{ paddingBottom: "60px" }}> {/* Prevent content from being blocked by tab bar */}
+      <Routes>
+        {/* Login Page */}
+        <Route path="/" element={user ? (
+          <div style={containerStyle}>
+            <div style={boxStyle}>
+          {/* <div style={{ textAlign: "center", marginTop: "80px" }}> */}
+              <h1>Road to One Million Beer</h1>
+              <h1>{beerCount}</h1>
+              <button
+                onClick={addBeer}
+                style={{
+                  fontSize: "20px",
+                  padding: "10px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  color: "black",
+                  backgroundColor: "#f5a623",
+                  borderRadius: "6px",
+                  border: "none"
+                }}
+              >
+                🍺 Prost 🍺
+              </button>
+              <br />
+              <h3>Wilkommen {username}!</h3>
+              <p style={{ fontSize: "18px", fontWeight: "normal" }}>
+                Danke, dass Du uns auf diesem Weg begleitest. 🍻
+              </p>
+              <button
+                // onClick={() => setUser(null)}
+                onClick={handleLogout}
+                style={{
+                  fontSize: "18px",
+                  marginTop: "20px",
+                  background: "black",
+                  color: "white",
+                  borderRadius: "6px",
+                  padding: "10px 20px",
+                  border: "none"
+                }}
+              >
+                Logout
+              </button>
+              <p style={{ fontSize: "14px", fontWeight: "normal", color: "grey", marginTop: "30px" }}>
+                Biederstein Productions © 2025
+              </p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <Auth setUser={setUser} />
-      )} />
+        ) : (
+          <Auth setUser={setUser} />
+        )} />
 
-      {/* Signup Page */}
-      <Route path="/signup" element={<Signup />} />
-    </Routes>
+        {/* Signup Page */}
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+      <TabBar />
+    </div>
   );
 }
 
