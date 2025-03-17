@@ -1,17 +1,39 @@
 // import './App.css';
 import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
-import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, setDoc, addDoc, getDocs, collection, serverTimestamp, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Auth from "./Auth";
 import Signup from "./Signup";
 import TabBar from "./TabBar";
+import Analytics from "./Analytics";
 
 function App() {
   const [user, setUser] = useState(null);
   const [beerCount, setBeerCount] = useState(0);
   const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const testFirestoreAccess = async () => {
+      try {
+        console.log("Testing Firestore Access...");
+
+        const beersCollection = collection(db, "beers");
+        const snapshot = await getDocs(beersCollection);
+
+        if (!snapshot.empty) {
+          console.log("✅ Firestore is working:", snapshot.docs.map(doc => doc.data()));
+        } else {
+          console.log("⚠️ No data found.");
+        }
+      } catch (error) {
+        console.error("🚨 Firestore Access Error:", error.code, error.message);
+      }
+    };
+
+    testFirestoreAccess();
+  }, []);
 
 
   useEffect(() => {
@@ -107,6 +129,7 @@ function App() {
     <div style={{ paddingBottom: user ? "60px" : "0px" }}> {/* Prevent content from being blocked by tab bar when logged in */}
       <Routes>
         {/* Login Page */}
+        <Route path="/analytics" element={user ? <Analytics user={user} /> : <Auth setUser={setUser} />} /> 
         <Route path="/" element={user ? (
           <div style={containerStyle}>
             <div style={boxStyle}>
