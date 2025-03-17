@@ -213,6 +213,23 @@ button:hover {
     background-color: #e68900;
 }
 
+.timeframe-btn {
+    width: 30%;
+    background-color: #ff9800;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.timeframe-btn:hover {
+    background-color: #e68900;
+}
+
 /* Sign-up Link */
 .signup-link {
     margin-top: 12px;
