@@ -17,10 +17,13 @@ const Analytics = ({ user }) => {
 
   // Fetch leaderboard data
 // Fetch leaderboard data and include usernames
+
 useEffect(() => {
   const fetchLeaderboard = async () => {
     try {
+      console.log("📢 Fetching leaderboard data...");
       const beersRef = collection(db, "beers");
+      const usersRef = collection(db, "users");
       let q;
 
       const now = new Date();
@@ -35,52 +38,69 @@ useEffect(() => {
         q = query(beersRef, where("timestamp", ">", last7Days));
       }
 
-      console.log(`Fetching leaderboard for timeframe: ${timeframe}`);
+      console.log(`📡 Firestore Query Executed: ${timeframe}`);
+      console.log("Fetching data from Firestore...");
+
       const snapshot = await getDocs(q);
-      console.log(`Leaderboard data fetched for ${timeframe}:`, snapshot.docs.map(doc => doc.data()));
 
+      if (snapshot.empty) {
+        console.warn("⚠️ No beers found in Firestore!");
+        setLeaderboard([]); // Clear leaderboard if no data
+        return;
+      }
+
+      console.log("✅ Beers found in Firestore:", snapshot.docs.map(doc => doc.data()));
+
+      // Step 1: Count beers per userId
       const beerCounts = {};
-      const userIds = new Set();
-
       snapshot.forEach((doc) => {
         const data = doc.data();
         if (data.userId) {
           beerCounts[data.userId] = (beerCounts[data.userId] || 0) + 1;
-          userIds.add(data.userId);
         }
       });
 
-      // Fetch usernames for leaderboard users
-      const usernames = {};
-      const userPromises = Array.from(userIds).map(async (userId) => {
-        const userDoc = await getDocs(query(collection(db, "users"), where("userId", "==", userId)));
-        if (!userDoc.empty) {
-          usernames[userId] = userDoc.docs[0].data().name; // Assuming 'name' is stored in the user doc
-        } else {
-          usernames[userId] = "Unknown User"; // Fallback if username is missing
-        }
-      });
+      const userIds = Object.keys(beerCounts);
+      console.log("🆔 User IDs for leaderboard:", userIds);
 
-      await Promise.all(userPromises);
+      // Step 2: Fetch usernames in batches of 10 (due to Firestore query limit)
+      const userMap = {};
+      for (let i = 0; i < userIds.length; i += 10) {
+        const batch = userIds.slice(i, i + 10); // Split into chunks of 10
+        const userDocs = await getDocs(query(usersRef, where("__name__", "in", batch)));
 
+        userDocs.forEach((doc) => {
+          userMap[doc.id] = doc.data().name; // Store username by userId
+        });
+      }
+
+      console.log("🔗 User Map (ID -> Name):", userMap);
+
+      // Step 3: Map userIds to usernames in leaderboard
       const sortedLeaderboard = Object.entries(beerCounts)
         .sort(([, a], [, b]) => b - a)
         .slice(0, 5)
-        .map(([userId, count]) => ({ userId, username: usernames[userId] || userId, count }));
+        .map(([userId, count]) => ({
+          username: userMap[userId] || "Unknown User", // Use username or fallback
+          count,
+        }));
+
+      console.log("🏆 Final Leaderboard:", sortedLeaderboard);
 
       setLeaderboard(sortedLeaderboard);
     } catch (error) {
-      console.error("❌ Firestore Error: Leaderboard Timeframe Query Failed", error);
+      console.error("🔥 Firestore Error:", error.code, error.message);
+      setLeaderboard([]); // Prevent crashing
     }
   };
 
   fetchLeaderboard();
 }, [timeframe]);
 
-
   // Fetch global beer count and total users
   useEffect(() => {
     const fetchGlobalStats = async () => {
+      console.log("Fetching global beer count...");
       try {
         const beersRef = collection(db, "beers");
         const usersRef = collection(db, "users");

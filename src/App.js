@@ -53,9 +53,28 @@ function App() {
       }
     });
 
-  return () => unsubscribe();
-}, []);
+    return () => unsubscribe();
+  }, []);
 
+  // Real-time listener for Beer Count updates
+  useEffect(() => {
+    if (!user) return; // Only run if user is logged in
+
+    console.log("Listening for real-time beer count updates...");
+    const docRef = doc(db, "global", "beerCount");
+
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        console.log("Updated Beer Count:", docSnap.data().count);
+        setBeerCount(docSnap.data().count);
+      } else {
+        console.log("No beer count document found. Initializing to 0.");
+        setBeerCount(0);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup when component unmounts
+  }, [user]); // Runs only when `user` changes
 
   useEffect(() => {
     const docRef = doc(db, "global", "beerCount");
