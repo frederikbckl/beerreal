@@ -195,7 +195,8 @@ const styles = {
     color: "white",
     minHeight: "100vh",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column", // Ensures top alignment
+    justifyContent: "flex-start", // aligns content from the top
     alignItems: "center",
     padding: "5%",
     paddingTop: "60px", // Prevent content from being out of reach
