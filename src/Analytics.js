@@ -164,7 +164,7 @@ const Analytics = ({ user }) => {
         {/* Global Stats */}
         <h2>Gruppenstatistik</h2>
         <p>
-          <strong>{beerCount}</strong> Bier wurden hier bisher getrunken. Wenn Ihr weiter in diesem Tempo trinkt, erreicht Ihr 
+          Bisher wurden <strong>{beerCount}</strong> Bier getrunken. Wenn Ihr weiter in diesem Tempo trinkt, erreicht Ihr 
           eine Millionen Bier in <strong>{years} Jahren, {days} Tagen und {hours} Stunden</strong>! Zum Wohle.
         </p>
         <p>Im Durchschnitt hat jeder von euch bisher <strong>{(beerCount / totalUsers).toFixed(2)}</strong> Bier getrunken.</p>
@@ -179,8 +179,6 @@ const Analytics = ({ user }) => {
         ) : (
           <p>Start adding beers to see your stats here!</p>
         )}
-
-
       </div>
     </div>
   );
@@ -199,7 +197,7 @@ const styles = {
     justifyContent: "flex-start", // aligns content from the top
     alignItems: "center",
     padding: "5%",
-    paddingTop: "60px", // Prevent content from being out of reach
+    paddingTop: "30px", // Prevent content from being out of reach
   },
   box: {
     backgroundColor: "#2a2a2a",
