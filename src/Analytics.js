@@ -120,6 +120,7 @@ const Analytics = ({ user }) => {
     <div style={styles.container}>
       <div style={styles.box}>
         {/* Leaderboard Header */}
+        <div style={{ height: "60px" }}></div>
         <div style={styles.header}>
           <h2 style={styles.centeredTitle}>Leaderboard</h2>
           <button
