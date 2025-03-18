@@ -197,6 +197,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     padding: "5%",
+    paddingTop: "60px", // Prevent content from being out of reach
   },
   box: {
     backgroundColor: "#2a2a2a",
@@ -206,6 +207,7 @@ const styles = {
     maxWidth: "700px",
     width: "100%",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+    paddingTop: "15px",
   },
   header: {
     display: "flex",
