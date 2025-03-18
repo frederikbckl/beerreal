@@ -68,7 +68,6 @@ const Analytics = ({ user }) => {
     fetchLeaderboard();
   }, [timeframe]);
 
-
   useEffect(() => {
     const fetchGlobalStats = async () => {
       try {
@@ -117,13 +116,12 @@ const Analytics = ({ user }) => {
   const days = Math.floor(daysLeft % 365);
   const hours = Math.floor((daysLeft % 1) * 24);
 
-
   return (
     <div style={styles.container}>
       <div style={styles.box}>
         {/* Leaderboard Header */}
         <div style={styles.header}>
-          <h2 style={styles.title}>Leaderboard</h2>
+          <h2 style={styles.centeredTitle}>Leaderboard</h2>
           <button
             className="timeframe-btn"
             style={styles.toggleButton}
@@ -142,17 +140,17 @@ const Analytics = ({ user }) => {
           <table style={styles.table}>
             <thead>
               <tr>
-                <th style={{ ...styles.th, width: "15%" }}>Rank</th>
-                <th style={{ ...styles.th, width: "300px" }}>User</th>
-                <th style={{ ...styles.th, width: "20%" }}>Beers</th>
+                <th style={{ ...styles.th, width: "15%" }}>Rang</th>
+                <th style={{ ...styles.th, width: "50%" }}>Name</th>
+                <th style={{ ...styles.th, width: "20%" }}># Biere</th>
               </tr>
             </thead>
             <tbody>
               {leaderboard.map((entry, index) => (
                 <tr key={index} style={index % 2 === 0 ? styles.rowEven : styles.rowOdd}>
-                  <td style={styles.td}>#{entry.rank}</td>
-                  <td style={styles.td}>{entry.username}</td>
-                  <td style={styles.td}>{entry.count}</td>
+                  <td style={styles.centeredText}>#{entry.rank}</td>
+                  <td style={styles.centeredText}>{entry.username}</td>
+                  <td style={styles.centeredText}>{entry.count}</td>
                 </tr>
               ))}
             </tbody>
@@ -161,30 +159,31 @@ const Analytics = ({ user }) => {
           <p style={styles.noData}>No beers added yet!</p>
         )}
 
+
         {/* Global Stats */}
-        <h2>Global Stats</h2>
+        <h2>Gruppenstatistik</h2>
         <p>
-          <strong>{beerCount}</strong> beers have been added in total. If your group keeps drinking at this pace, you'll reach{" "}
-          <strong>one million beers in {years} years, {days} days, and {hours} hours</strong>!
+          <strong>{beerCount}</strong> Bier wurden hier bisher getrunken. Wenn Ihr weiter in diesem Tempo trinkt, erreicht Ihr 
+          eine Millionen Bier in <strong>{years} Jahren, {days} Tagen und {hours} Stunden</strong>! Zum Wohle.
         </p>
-        <p>On average, each user has added <strong>{(beerCount / totalUsers).toFixed(2)}</strong> beers.</p>
+        <p>Im Durchschnitt hat jeder von euch bisher <strong>{(beerCount / totalUsers).toFixed(2)}</strong> Bier getrunken.</p>
 
         {/* User Stats */}
-        <h2>Your Stats</h2>
+        <h2>Deine Statistik</h2>
         {userStats.totalBeers > 0 ? (
           <p>
-            You've contributed <strong>{userStats.totalBeers}</strong> beers! This means you drink around <strong>{userStats.weeklyAvg}</strong> beers per week.
-            With your beer consumption, you could have filled <strong>{userStats.bathtubsFilled}</strong> bathtubs!
+            Du hast bisher <strong>{userStats.totalBeers}</strong> Bier beigetragen. Damit stehst du aktuell bei <strong>{userStats.weeklyAvg}</strong> Bier pro Woche. Da geht noch mehr!
+            Fun Fact: Mit deinem bisherigen Konsum hättest Du bereits <strong>{userStats.bathtubsFilled}</strong> Badewannen mit Bier fülllen können. #bierbebadbarkeit
           </p>
         ) : (
           <p>Start adding beers to see your stats here!</p>
         )}
 
+
       </div>
     </div>
   );
 };
-
 
 export default Analytics;
 
@@ -210,13 +209,15 @@ const styles = {
   },
   header: {
     display: "flex",
-    justifyContent: "space-between",
+    flexDirection: "column",
     alignItems: "center",
     marginBottom: "15px",
   },
-  title: {
+  centeredTitle: {
     fontSize: "22px",
     fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: "10px",
   },
   toggleButton: {
     background: "#f5a623",
@@ -229,21 +230,21 @@ const styles = {
   },
   table: {
     width: "100%",
-    borderCollapse: "collapse", // ✅ Ensures proper table styling
+    borderCollapse: "collapse",
     marginTop: "10px",
-    textAlign: "left", // Aligns content properly
+    textAlign: "center",
   },
   th: {
     backgroundColor: "#333",
     padding: "12px",
     borderBottom: "2px solid #444",
     fontWeight: "bold",
-    textAlign: "left",
+    textAlign: "center",
   },
-  td: {
+  centeredText: {
     padding: "12px",
     borderBottom: "1px solid #444",
-    textAlign: "left",
+    textAlign: "center",
   },
   rowEven: {
     backgroundColor: "#222",
@@ -257,3 +258,4 @@ const styles = {
     color: "gray",
   },
 };
+
