@@ -78,6 +78,9 @@ const Profile = () => {
     return (
         <div className="profile-container">
             <div className="profile-box">
+                <p style={{ fontSize: "16px", fontWeight: "bold", color: "white", marginTop: "10px" }}>
+                  Profilbild
+                </p>
                 <div className="profile-pic-section">
                     <div className="profile-pic-wrapper">
                         <img
@@ -95,12 +98,45 @@ const Profile = () => {
                         onChange={handleProfilePicChange}
                     />
                 </div>
+                <p style={{ fontSize: "16px", fontWeight: "bold", color: "white", marginTop: "10px" }}>
+                  Benutzername
+                </p>
                 <div className="profile-details">
                     {userData && (
                         <>
-                            {[['name', 'Benutzername'], ['password', 'Passwort']].map(([field, label]) => (
+                            {[['name', 'Benutzername']].map(([field, label]) => (
                                 <div key={field} className="profile-field-container">
-                                    <label className="profile-label">{label}</label>
+                                    <label className="profile-label">{}</label>
+                                    <div className="profile-field">
+                                        {editingField === field ? (
+                                            <input
+                                                className="profile-input"
+                                                value={newValue}
+                                                onChange={(e) => setNewValue(e.target.value)}
+                                            />
+                                        ) : (
+                                            <div className="input-box">{field === "password" ? "********" : userData[field]}</div>
+                                        )}
+                                        {editingField === field ? (
+                                            <button className="save-btn" onClick={() => handleSave(field)}>Speichern</button>
+                                        ) : (
+                                            <button className="change-btn" onClick={() => handleEdit(field)}>Ändern</button>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </>
+                    )}
+                </div>
+                <p style={{ fontSize: "16px", fontWeight: "bold", color: "white", marginTop: "10px" }}>
+                  Passwort
+                </p>
+                <div className="profile-details">
+                    {userData && (
+                        <>
+                            {[['password', 'Passwort']].map(([field, label]) => (
+                                <div key={field} className="profile-field-container">
+                                    <label className="profile-label">{}</label>
                                     <div className="profile-field">
                                         {editingField === field ? (
                                             <input
@@ -123,6 +159,8 @@ const Profile = () => {
                         </>
                     )}
                 </div>
+
+
                 <button className="logout-btn" onClick={handleLogout}>Logout</button>
             </div>
         </div>
