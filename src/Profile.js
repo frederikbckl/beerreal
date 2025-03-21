@@ -98,7 +98,7 @@ const Profile = () => {
                 <div className="profile-details">
                     {userData && (
                         <>
-                            {[['name', 'Benutzername'], ['email', 'E-Mail-Adresse'], ['password', 'Passwort']].map(([field, label]) => (
+                            {[['name', 'Benutzername'], ['password', 'Passwort']].map(([field, label]) => (
                                 <div key={field} className="profile-field-container">
                                     <label className="profile-label">{label}</label>
                                     <div className="profile-field">
