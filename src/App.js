@@ -8,11 +8,14 @@ import Auth from "./Auth";
 import Signup from "./Signup";
 import TabBar from "./TabBar";
 import Analytics from "./Analytics";
+import Profile from "./Profile";
 
 function App() {
   const [user, setUser] = useState(null);
   const [beerCount, setBeerCount] = useState(0);
   const [username, setUsername] = useState("");
+  const [displayName, setDisplayName] = useState(auth.currentUser?.displayName || "Nutzer");
+
 
   useEffect(() => {
     const testFirestoreAccess = async () => {
@@ -35,11 +38,11 @@ function App() {
     testFirestoreAccess();
   }, []);
 
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
+        setDisplayName(user?.displayName || "Nutzer");
         localStorage.setItem("user", JSON.stringify(user)); // Store user in localStorage
 
         const userRef = doc(db, "users", user.uid);
@@ -138,17 +141,38 @@ function App() {
     }
   };
 
-  // Logout Function
+  // logout function
   const handleLogout = async () => {
     await signOut(auth);
     setUser(null);
   };
+
+
+
+
+//     return (
+//         <Router>
+//             <div className="app-container">
+//                 <Routes>
+//                     <Route path="/" element={<Home displayName={displayName} />} />
+//                     <Route path="/profile" element={<Profile updateDisplayName={setDisplayName} />} />
+//                     <Route path="/analytics" element={<Analytics />} />
+//                 </Routes>
+//                 {user && <TabBar />}
+//             </div>
+//         </Router>
+//     );
+// };
+
+
+
 
   return (
     <div style={{ paddingBottom: user ? "60px" : "0px" }}> {/* Prevent content from being blocked by tab bar when logged in */}
       <Routes>
         {/* Login Page */}
         <Route path="/analytics" element={user ? <Analytics user={user} /> : <Auth setUser={setUser} />} /> 
+        <Route path="/profile" element={user ? <Profile user={user} /> : <Auth setUser={setUser} />} /> 
         <Route path="/" element={user ? (
           <div style={containerStyle}>
             <div style={boxStyle}>
