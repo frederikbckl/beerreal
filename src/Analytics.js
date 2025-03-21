@@ -132,7 +132,7 @@ const Analytics = ({ user }) => {
               )
             }
           >
-            {timeframe} ▼
+            {timeframe}
           </button>
         </div>
 
@@ -173,7 +173,7 @@ const Analytics = ({ user }) => {
         <h2>Deine Statistik</h2>
         {userStats.totalBeers > 0 ? (
           <p>
-            Du hast bisher <strong>{userStats.totalBeers}</strong> Bier beigetragen. Damit stehst du aktuell bei <strong>{userStats.weeklyAvg}</strong> Bier pro Woche. Da geht noch mehr!
+            Du hast bisher <strong>{userStats.totalBeers}</strong> Bier beigetragen. Damit stehst du derzeit bei <strong>{userStats.weeklyAvg}</strong> Bier pro Woche. Da geht noch mehr!
             Fun Fact: Mit deinem bisherigen Konsum hättest Du bereits <strong>{userStats.bathtubsFilled}</strong> Badewannen mit Bier fülllen können. #bierbebadbarkeit
           </p>
         ) : (
